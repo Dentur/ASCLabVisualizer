@@ -44,6 +44,7 @@ public class CommandExecutioner : MonoBehaviour {
         Vector3 mv;
         Vector3 rot;
         Marker marker;
+        command[0] = command[0].ToUpper();
         switch(command[0])
         {
             case "STEP":
@@ -81,7 +82,7 @@ public class CommandExecutioner : MonoBehaviour {
                     transform.eulerAngles = new Vector3(0, 270, 0);
 
                 break;
-            case "LOOK":
+            case "TURN":
                 dir = int.Parse(command[1]);
                 if (dir == 0)
                     transform.eulerAngles = new Vector3(0, 0, 0);
@@ -98,37 +99,37 @@ public class CommandExecutioner : MonoBehaviour {
                 transform.position = new Vector3(telePosX, 0, -telePosY);
                 break;
             case "SSTONE":
-                dir = int.Parse(command[1]);
-                mv = new Vector3();
-                if (dir == 0)
-                    mv.y -= 1;
-                else if (dir == 1)
-                    mv.x += 1;
-                else if (dir == 2)
-                    mv.y += 1;
-                else if (dir == 3)
-                    mv.x -= 1;
-                marker = new Marker();
-                marker.stone = true;
-                marker.marker = (GameObject)Instantiate(markerPrefab, mv, new Quaternion());
-                markers.Add(marker);
+                //dir = int.Parse(command[1]);
+                //mv = new Vector3();
+                //if (dir == 0)
+                //    mv.y -= 1;
+                //else if (dir == 1)
+                //    mv.x += 1;
+                //else if (dir == 2)
+                //    mv.y += 1;
+                //else if (dir == 3)
+                //    mv.x -= 1;
+                //marker = new Marker();
+                //marker.stone = true;
+                //marker.marker = (GameObject)Instantiate(markerPrefab, mv, new Quaternion());
+                //markers.Add(marker);
                 break;
             case "SMARKER":
-                dir = int.Parse(command[1]);
-                mv = new Vector3();
-                if (dir == 0)
-                    mv.z += 1;
-                else if (dir == 1)
-                    mv.x += 1;
-                else if (dir == 2)
-                    mv.z -= 1;
-                else if (dir == 3)
-                    mv.x -= 1;
-                marker = new Marker();
-                marker.stone = true;
-                marker.marker = (GameObject)Instantiate(markerPrefab, mv, new Quaternion());
-                
-                markers.Add(marker);
+                //dir = int.Parse(command[1]);
+                //mv = new Vector3();
+                //if (dir == 0)
+                //    mv.z += 1;
+                //else if (dir == 1)
+                //    mv.x += 1;
+                //else if (dir == 2)
+                //    mv.z -= 1;
+                //else if (dir == 3)
+                //    mv.x -= 1;
+                //marker = new Marker();
+                //marker.stone = true;
+                //marker.marker = (GameObject)Instantiate(markerPrefab, mv, new Quaternion());
+                //
+                //markers.Add(marker);
                 break; 
             case "DMARKER":
 

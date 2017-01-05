@@ -71,11 +71,11 @@ public class CreateWorldOnStartup : MonoBehaviour {
             string line = sr.ReadLine();
             for(int i = 0; i < lvlXSize; i++)
             {
-                if (line[i] == ' ' || line[i] == 'S' || line[i] == 'E')
+                if (line[i] == ' ' || line[i] == 'S' || line[i] == 'G')
                 {
                     GameObject floor = (GameObject)Instantiate(FloorPrefab, currentPos, new Quaternion());
                 }
-                if(line[i] == 'E')
+                if(line[i] == 'G')
                 {
                     GameObject end = (GameObject)Instantiate(EndPrefab, currentPos, new Quaternion());
                     endX = i;
