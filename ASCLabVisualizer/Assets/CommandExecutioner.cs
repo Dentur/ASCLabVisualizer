@@ -22,6 +22,9 @@ public class CommandExecutioner : MonoBehaviour {
     public bool running = false;
     public float timing = 1.0f;
     public List<List<string>> commands;
+    public bool lerp;
+
+    Vector3 lastPos, lastRot, newPos, newRot;
 
     List<Marker> markers;
 
@@ -32,6 +35,8 @@ public class CommandExecutioner : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         markers = new List<Marker>();
+        //lastRot = transform.eulerAngles;
+        //lastPos = transform.position;
 	}
 	
 	// Update is called once per frame
@@ -39,6 +44,19 @@ public class CommandExecutioner : MonoBehaviour {
         if (!running)//Do nothing if the component is turned of
             return;
         timeSinceLastExecution += Time.deltaTime;
+        //if (lerp)
+        //{
+        //    transform.position = Vector3.Lerp(lastPos, newPos, (timeSinceLastExecution / (timing * 0.75f)));
+        //    transform.eulerAngles = Vector3.Lerp(lastRot, newRot, (timeSinceLastExecution / (timing * 0.75f)));
+        //}
+        //else
+        //{
+        //    lastPos = transform.position;
+        //    lastRot = transform.eulerAngles;
+        //}
+        //if (timeSinceLastExecution <= timing * 0.75f)
+        //    lerp = false;
+        //Execute
         if (timeSinceLastExecution < timing)//Return if we are still on cooldown
             return;
         timeSinceLastExecution = 0;
@@ -93,6 +111,8 @@ public class CommandExecutioner : MonoBehaviour {
                 else if (dir == 3)
                     mv.x -= 1;
                 transform.Translate(mv, Space.World);
+                //newPos=transform.position+mv;
+                //lerp = true;
                 break;
             case "MOVE":
                 dir = int.Parse(command[1]);
@@ -106,6 +126,9 @@ public class CommandExecutioner : MonoBehaviour {
                 else if (dir == 3)
                     mv.x -= 1;
                 transform.Translate(mv, Space.World);
+                //newPos=transform.position+mv;
+                //lerp = true;
+
                 if (dir == 0)
                 {
                     transform.eulerAngles = new Vector3(0, 0, 0);
@@ -179,6 +202,8 @@ public class CommandExecutioner : MonoBehaviour {
                 int telePosX = int.Parse(command[1]);
                 int telePosY = int.Parse(command[2]);
                 transform.position = new Vector3(telePosX, 0, -telePosY);
+                newPos = transform.position;
+                lastPos = transform.position;
                 break;
             case "SSTONE":
                 dir = int.Parse(command[1]);
