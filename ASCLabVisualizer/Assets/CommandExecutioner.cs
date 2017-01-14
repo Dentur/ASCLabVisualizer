@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 struct Marker
 {
@@ -9,6 +10,7 @@ struct Marker
     public int dir;
     public GameObject marker;
     public bool stone;
+    public int x, y;
 }
 
 public class CommandExecutioner : MonoBehaviour {
@@ -228,6 +230,8 @@ public class CommandExecutioner : MonoBehaviour {
                     mv = new Vector3(-1, 0, 0);
                 }
                 marker.marker.transform.position = (mv+marker.marker.transform.position);
+                marker.x = (int)marker.marker.transform.position.x;
+                marker.y = (int)marker.marker.transform.position.z;
                 Transform stone = marker.marker.transform.FindChild("Stone");
                 Debug.Log(stone);
                 stone.gameObject.active = true;
@@ -258,7 +262,13 @@ public class CommandExecutioner : MonoBehaviour {
                 {
                     mv = new Vector3(-1, 0, 0);
                 }
+                else if (dir == 8)
+                {
+                    mv = new Vector3();
+                }
                 marker.marker.transform.position = (mv + marker.marker.transform.position);
+                marker.x = (int)marker.marker.transform.position.x;
+                marker.y = (int)marker.marker.transform.position.z;
                 rot = new Vector3();
                 if (dir2 == 0)
                 {
@@ -278,14 +288,45 @@ public class CommandExecutioner : MonoBehaviour {
                 }
                 marker.marker.transform.eulerAngles = rot;
                 Transform text = marker.marker.transform.FindChild("Text");
-                text.gameObject.active = true;
-                text.GetComponent<TextMesh>().text = command[2];
+                text.gameObject.SetActive(true);
+                text.GetComponent<TextMesh>().text = val.ToString();
                 markers.Add(marker);
                 break; 
             case "DMARKER":
-                int index = int.Parse(command[1]);
-                Destroy(markers[index].marker);
-                markers.RemoveAt(index);
+                
+                dir = int.Parse(command[1]);
+                mv = new Vector3();
+                if (dir == 0)
+                {
+                    mv = new Vector3(0, 0, 1);
+                }
+                else if (dir == 1)
+                {
+                    mv = new Vector3(1, 0, 0);
+                }
+                else if (dir == 2)
+                {
+                    mv = new Vector3(0, 0, -1);
+                }
+                else if (dir == 3)
+                {
+                    mv = new Vector3(-1, 0, 0);
+                }
+                else if(dir == 8)
+                {
+                    mv = new Vector3();
+                }
+                int posX = (int)(mv + transform.position).x;
+                int posY = (int)(mv + transform.position).z;
+                try
+                {
+                    int index = markers.FindIndex(k => k.x == posX && k.y == posY);
+                    Debug.Log("Deleting marker at " + index + " at position " + markers[index].x + "x " + markers[index].y + "y");
+                    Destroy(markers[index].marker);
+                    markers.RemoveAt(index);
+                }
+                catch(Exception e)
+                { }
                 break;
             case "PRINTF":
                 string debugText = "";
